@@ -1,0 +1,213 @@
+# GET http://localhost:3000/api/comercio/findAll
+
+# ###
+# //Listamos todos los comercios en orden ascendente
+# GET http://localhost:3000/api/comercio/findAll?sort=cif_asc
+
+# ###
+# //Buscamos un comercio por su 'CIF' pasado por referencia mediante QueryString
+# GET http://localhost:3000/api/comercio/findByCif?cif=12345ASL
+
+# ###
+# //Editamos los campos a voluntad de un comercio en base a su identificador único 'CIF'
+# PUT http://localhost:3000/api/comercio/modifyByCif/12345ASL
+# Content-Type: application/json
+
+# {
+#   "nombre": "Comercio de Juan",
+#   "cif": "12345ASL",
+#   "direccion": "Calle de Jupiter",
+#   "email": "marta.romero@gmail.com",
+#   "telefono": "657493466",
+#   "id": 26
+# }
+
+# ###
+# DELETE http://localhost:3000/api/comercio/deleteByCif/12345ASL?fisico=false
+
+//----REGISTERED AND PUBLIC USERS----
+
+###
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Javi",
+  "email":"javi@gmail.com",
+  "password":"abcdefghijk",
+  "edad": 20,
+  "ciudad": "Madrid",
+  "intereses": ["Padel", "RealMadrid"],
+  "recibirOfertas": true
+}
+
+###
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "pablo@gmail.com",
+  "password": "abcdefghijk"
+}
+
+###
+GET http://localhost:3000/api/auth/paginas
+
+###
+GET http://localhost:3000/api/auth/paginas/662ae7944a8e3afd273853f1
+
+###
+GET http://localhost:3000/api/auth/paginas-ciudad/Leon
+
+###
+GET http://localhost:3000/api/auth/paginas-ciudad-actividad/Sevilla/paracaidismo
+
+
+###
+PUT http://localhost:3000/api/auth/updateSelf HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJhZTQ5MzQzZmE5ZDFhYzIwNGQ1ZDciLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNDA4NzA1OSwiZXhwIjoxNzE0MTE1ODU5fQ.TPtT8ljwpfhGUEpAVH5wUTue7cAc_Wc4XdsHqcfFnZ8
+
+{
+  "nombre":"Juan",
+  "edad":24,
+  "email":"juan@gmail.com",
+  "password":"Juan12345"
+}
+
+###
+DELETE http://localhost:3000/api/auth/borrar HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJhZTZkNjRhOGUzYWZkMjczODUzZTciLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNDA4NzY1NCwiZXhwIjoxNzE0MTE2NDU0fQ.XynB1JC11EQa3gZVlUu3wMEi8sJRHKDMsAiS44qU5Pw
+
+//----ADMINS----
+
+###
+PATCH http://localhost:3000/api/auth/grant/6624f93d6a1326022bb9dbaa HTTP/1.1
+Content-Type: application/json
+
+{}
+
+###
+POST http://localhost:3000/api/auth/registrarComercio HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJhZTc2NjRhOGUzYWZkMjczODUzZWUiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNDA4Nzc4MiwiZXhwIjoxNzE0MTE2NTgyfQ.Zblh8o0Mw2WzkxZ2tBDZ9XmsGaHayTF0bqRIENBiYdw
+
+{
+  "nombre": "Comercio de Alvaro",
+  "cif": "23456TYU",
+  "direccion": "Calle de Jupiter",
+  "email": "lucas@gmail.com",
+  "telefono": "657493466",
+  "id": 26
+}
+
+###
+PUT http://localhost:3000/api/auth/modificarComercio/6546547547547 HTTP/1.1
+Authorization: Bearer
+
+{
+    "nombre": "Comercio de Alvaro",
+    "cif": "12345ASL",
+    "direccion": "CalledeJupiter",
+    "email": "marta.romero@gmail.com",
+    "telefono": "657493466",
+    "id": 26
+}
+
+###
+PATCH http://localhost:3000/api/auth/valorar/662ae7944a8e3afd273853f1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJhZTdjMDRhOGUzYWZkMjczODUzZjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTcxNDA4ODQzNCwiZXhwIjoxNzE0MTE3MjM0fQ.ECmQUz6E_LGP-1jDpEt6sUA8PmV__2hU36sf8KU4u60
+
+{
+  "puntuacion":4,
+  "resena":"Muy buen hotel"
+}
+
+###
+GET http://localhost:3000/api/auth/consultarComercios HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjI0ZjkzZDZhMTMyNjAyMmJiOWRiYWEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTM5NzEwNzIsImV4cCI6MTcxMzk5OTg3Mn0.GpWWk8XWVjF9_K61ImGOtLQo8VUqkG0bB6ObfaeQ_ec
+
+###
+GET http://localhost:3000/api/auth/consultarComercio/65f8bda2396e98bea8547232 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjI0ZjkzZDZhMTMyNjAyMmJiOWRiYWEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTM5NzEwNzIsImV4cCI6MTcxMzk5OTg3Mn0.GpWWk8XWVjF9_K61ImGOtLQo8VUqkG0bB6ObfaeQ_ec
+
+{}
+###
+DELETE http://localhost:3000/api/auth/borrarComercio/66291ebca79fb76a0e8296f3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjI0ZjkzZDZhMTMyNjAyMmJiOWRiYWEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTM5NzEwNzIsImV4cCI6MTcxMzk5OTg3Mn0.GpWWk8XWVjF9_K61ImGOtLQo8VUqkG0bB6ObfaeQ_ec
+
+//----COMERCIO----
+
+###
+POST http://localhost:3000/api/comercio/publicarPagina HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJhZTc5NDRhOGUzYWZkMjczODUzZjEiLCJyb2xlIjoiY29tZXJjaW8iLCJpYXQiOjE3MTQwODgwODksImV4cCI6MTcxNDExNjg4OX0._Uw16coJ4uxXt4Z47qfbU0z8C3DNKs_ugFbQZPNkopM
+
+{
+  "ciudad": "Pagina de Alvaro",
+  "actividad": "Actividad Ejemplo",
+  "titulo": "Titulo de la Pagina",
+  "resumen": "Este es un resumen de la pagina.",
+  "textos": ["Texto 1", "Texto 2"],
+  "fotos": ["foto1.jpg", "foto2.jpg"],
+  "puntuaciones": 0,
+  "resenas": []
+}
+
+###
+PUT http://localhost:3000/api/comercio/modificarPagina/66292ddbd06467853d67c563 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjI5MmRkYmQwNjQ2Nzg1M2Q2N2M1NjMiLCJyb2xlIjoiY29tZXJjaW8iLCJpYXQiOjE3MTM5NzYxMTgsImV4cCI6MTcxNDAwNDkxOH0.zCW2VkywyNT3TXCBkHX48cZQ-lTWJ-9C6jMFPFMadts
+
+{
+  "ciudad": "Ciudad de Paloma",
+  "actividad": "Actividad de Paloma",
+  "titulo": "Titulo de Paloma",
+  "resumen": "Este es un resumen de la pagina.",
+  "textos": [],
+  "fotos": [],
+  "puntuaciones": 0,
+  "resenas": []
+}
+
+###
+POST http://localhost:3000/api/comercio/loginComercio HTTP/1.1
+Content-Type: application/json
+
+{
+  "email":"lucas@gmail.com",
+  "cif":"23456TYU"
+}
+
+###
+POST http://localhost:3000/api/comercio/subirTexto HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjI5MmRkYmQwNjQ2Nzg1M2Q2N2M1NjMiLCJyb2xlIjoiY29tZXJjaW8iLCJpYXQiOjE3MTM5OTMzOTMsImV4cCI6MTcxNDAyMjE5M30.EI6WwK_vgsEN9FJ9s_Un6jeU2nr5TjbPHG2uYA7k2PE
+
+{
+  "textos":["Texto1","Texto2"]
+}
+
+###
+DELETE http://localhost:3000/api/comercio/borrarPagina/66292f06d06467853d67c56e HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjI5MmRkYmQwNjQ2Nzg1M2Q2N2M1NjMiLCJyb2xlIjoiY29tZXJjaW8iLCJpYXQiOjE3MTM5Nzg5MjQsImV4cCI6MTcxNDAwNzcyNH0.5hOEZHpvSZmd3W8hKbTbgE0RWqKeree-R9CucKKl3lI
+
+###
+POST http://localhost:3000/api/comercio/subirFoto HTTP/1.1
+Content-Type: multipart/form-data; boundary=Boundry
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjI5MmRkYmQwNjQ2Nzg1M2Q2N2M1NjMiLCJyb2xlIjoiY29tZXJjaW8iLCJpYXQiOjE3MTM5OTMzOTMsImV4cCI6MTcxNDAyMjE5M30.EI6WwK_vgsEN9FJ9s_Un6jeU2nr5TjbPHG2uYA7k2PE
+
+--Boundry
+Content-Disposition: form-data; name="foto"; filename="insta_logo.png"
+Content-Type: image/png
+
+< ./insta_logo.png
+--Boundry--  
+
+###
+GET http://localhost:3000/api/comercio/buscarUsuarios/Madrid HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJhZTc5NDRhOGUzYWZkMjczODUzZjEiLCJyb2xlIjoiY29tZXJjaW8iLCJpYXQiOjE3MTQwODkwMzYsImV4cCI6MTcxNDExNzgzNn0.T4uakm97pqrrkNr9WvXYLD4Jvq8C58A3PXO_9XImZR8
+
+
+
